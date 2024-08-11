@@ -40,7 +40,7 @@ CREATE TABLE `estud-io`.flashcards (
     question varchar(500) NOT NULL,
     answer varchar(100) NOT NULL,
     num_correct_answers INT NULL,
-    num_wrong_answers varchar(100) NULL,
+    num_wrong_answers INT NULL,
     CONSTRAINT flashcards_pk PRIMARY KEY (flashcard_id),
     CONSTRAINT flashcards_subjects_FK FOREIGN KEY (subject_id) REFERENCES `estud-io`.subjects(subject_id)
 )
