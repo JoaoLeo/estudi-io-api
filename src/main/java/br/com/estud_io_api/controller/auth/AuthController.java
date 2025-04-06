@@ -4,6 +4,9 @@ import br.com.estud_io_api.dto.auth.UserDTO;
 import br.com.estud_io_api.exception.AuthException;
 import br.com.estud_io_api.service.auth.AuthService;
 import br.com.estud_io_api.utils.MessageHandler;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,6 +27,13 @@ public class AuthController {
     private MessageHandler messageHandler;
 
     @PostMapping("create-account")
+    @Operation(
+            summary = "Create a user account"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User successfully created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data")
+    })
     public ResponseEntity<String> createAccount(@RequestBody UserDTO userDTO) {
         int languageHeader = request.getIntHeader("LanguageOption");
         try {

@@ -91,20 +91,28 @@
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 
-		<!-- JJWT API -->
+		<!-- JWT API -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>0.12.6</version>
 		</dependency>
 
-		<!-- JJWT Implementation (includes io.jsonwebtoken.impl.DefaultJwtParser etc) -->
+		<!-- JWT Implementation (includes io.jsonwebtoken.impl.DefaultJwtParser etc) -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
 			<version>0.12.6</version>
 			<scope>runtime</scope>
 		</dependency>
+
+		<!-- Swagger -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
 
 	</dependencies>
 
