@@ -29,7 +29,7 @@ public class User {
     private String password;
 
     @Column(name = "account_creation_date", nullable = false)
-    private LocalDate accountCreationDate;
+    private LocalDate creationDate;
 
     @Column(name = "goal", length = 500)
     private String goal;
