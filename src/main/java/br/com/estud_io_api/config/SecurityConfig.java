@@ -30,18 +30,11 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/hello-world",
-                                "/auth/create-account").permitAll()
+                        .requestMatchers("/public/hello-world").permitAll()
+                        .requestMatchers("/auth/create-account").permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .csrf(AbstractHttpConfigurer::disable)
-                .headers(headers -> headers
-                        .httpStrictTransportSecurity(hsts ->
-                                hsts.includeSubDomains(true).maxAgeInSeconds(31536000))
-                        .contentSecurityPolicy(csp -> csp
-                                .policyDirectives("default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline';")
-                        )
-                ).sessionManagement(
+                .csrf(AbstractHttpConfigurer::disable).sessionManagement(
                         session ->
                                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
