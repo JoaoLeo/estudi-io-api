@@ -1,4 +1,4 @@
-CREATE TABLE `estud-io`.users (
+CREATE TABLE IF NOT EXISTS `estud-io`.users (
 	user_id INT auto_increment NOT NULL,
 	name varchar(50) NOT NULL,
 	email varchar(250) NOT NULL,
@@ -11,7 +11,7 @@ ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `estud-io`.subjects (
+CREATE TABLE IF NOT EXISTS `estud-io`.subjects (
     subject_id INT auto_increment NOT NULL,
     user_id INT NOT NULL,
     name varchar(100) NOT NULL,
@@ -22,7 +22,7 @@ ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `estud-io`.study_cycle (
+CREATE TABLE IF NOT EXISTS `estud-io`.study_cycle (
     study_cycle_id INT auto_increment NOT NULL,
     subject_id INT NOT NULL,
     start_date DATE NOT NULL,
@@ -34,7 +34,7 @@ ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `estud-io`.flashcards (
+CREATE TABLE IF NOT EXISTS `estud-io`.flashcards (
     flashcard_id INT auto_increment NOT NULL,
     subject_id INT NULL,
     question varchar(500) NOT NULL,
@@ -48,7 +48,7 @@ ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `estud-io`.study_record (
+CREATE TABLE IF NOT EXISTS `estud-io`.study_record (
     study_record_id INT NOT NULL,
     study_cycle_id INT NOT NULL,
     duration TIME NOT NULL,
