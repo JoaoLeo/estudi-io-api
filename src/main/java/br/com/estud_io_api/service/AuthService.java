@@ -38,8 +38,7 @@ public class AuthService {
     private void checkAccount(UserDTO userDTO, int languageOption){
         if(userValidator.emailInUse(userDTO.getEmail()))
             throw new AuthException(messageHandler.getCustomMessage(languageOption,
-                    "eng-user.already.exists",
-                    "pt-br-user.already.exists"));
+                    "user.already.exists"));
 
     }
 }

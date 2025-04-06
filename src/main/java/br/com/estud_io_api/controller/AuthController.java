@@ -29,8 +29,7 @@ public class AuthController {
         try {
             service.createAccount(userDTO,languageHeader);
             return ResponseEntity.ok(messageHandler.getCustomMessage(languageHeader,
-                    "eng-user.created.successfully",
-                    "pt-br-user.created.successfully"));
+                    "created.successfully"));
         } catch (AuthException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
