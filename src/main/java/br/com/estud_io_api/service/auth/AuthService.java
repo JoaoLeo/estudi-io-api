@@ -1,10 +1,14 @@
 package br.com.estud_io_api.service.auth;
 
+import br.com.estud_io_api.dto.auth.LoginDTO;
+import br.com.estud_io_api.dto.auth.TokenDTO;
 import br.com.estud_io_api.dto.auth.UserDTO;
 import br.com.estud_io_api.entity.auth.User;
 import br.com.estud_io_api.exception.AuthException;
+import br.com.estud_io_api.exception.LoginException;
 import br.com.estud_io_api.repository.auth.UserRepository;
 import br.com.estud_io_api.service.email.EmailService;
+import br.com.estud_io_api.utils.JwtTokenUtil;
 import br.com.estud_io_api.utils.MessageHandler;
 import br.com.estud_io_api.utils.TokenEmailUtils;
 import br.com.estud_io_api.validator.UserValidator;
@@ -35,6 +39,9 @@ public class AuthService {
 
     @Autowired
     private TokenEmailUtils tokenUtils;
+
+    @Autowired
+    private JwtTokenUtil jwtUtils;
 
     @Transactional
     public User createAccount(UserDTO userDTO, int languageOption) {
@@ -71,5 +78,17 @@ public class AuthService {
         emailService.sendHtmlEmail(user.getEmail(),
                 messageHandler.getCustomMessage(languageOption,"subject.email.verified"),
                 messageHandler.getCustomMessage(languageOption,"text.email.verified.html"));
+    }
+
+    public TokenDTO login(LoginDTO loginDTO, int languageOption) {
+        userValidator.checkValidLogin(loginDTO, languageOption);
+
+        User user = userRepo.findByEmail(loginDTO.getEmail());
+        if(passwordEncoder.matches(loginDTO.getPassword(), user.getPassword()))
+            throw new LoginException(messageHandler.getCustomMessage(languageOption,
+                    "error.invalid.password"));
+
+        TokenDTO token = jwtUtils.generateToken(user);
+        return token;
     }
 }
