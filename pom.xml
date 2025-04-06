@@ -97,6 +97,20 @@
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 
+		<!-- JJWT API -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.12.6</version>
+		</dependency>
+
+		<!-- JJWT Implementation (includes io.jsonwebtoken.impl.DefaultJwtParser etc) -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.12.6</version>
+			<scope>runtime</scope>
+		</dependency>
 
 	</dependencies>
 
