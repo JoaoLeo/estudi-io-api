@@ -1,6 +1,6 @@
-package br.com.estud_io_api.repository;
+package br.com.estud_io_api.repository.auth;
 
-import br.com.estud_io_api.entity.User;
+import br.com.estud_io_api.entity.auth.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

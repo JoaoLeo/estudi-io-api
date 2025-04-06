@@ -1,5 +1,6 @@
-package br.com.estud_io_api.entity;
+package br.com.estud_io_api.entity.cycle;
 
+import br.com.estud_io_api.entity.subject.Subject;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

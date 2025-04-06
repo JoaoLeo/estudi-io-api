@@ -1,8 +1,8 @@
-package br.com.estud_io_api.controller;
+package br.com.estud_io_api.controller.auth;
 
-import br.com.estud_io_api.UserDTO;
+import br.com.estud_io_api.dto.auth.UserDTO;
 import br.com.estud_io_api.exception.AuthException;
-import br.com.estud_io_api.service.AuthService;
+import br.com.estud_io_api.service.auth.AuthService;
 import br.com.estud_io_api.utils.MessageHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package br.com.estud_io_api;
+package br.com.estud_io_api.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

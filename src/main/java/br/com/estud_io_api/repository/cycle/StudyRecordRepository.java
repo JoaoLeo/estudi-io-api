@@ -1,6 +1,6 @@
-package br.com.estud_io_api.repository;
+package br.com.estud_io_api.repository.cycle;
 
-import br.com.estud_io_api.entity.StudyRecord;
+import br.com.estud_io_api.entity.cycle.StudyRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

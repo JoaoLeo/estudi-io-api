@@ -1,4 +1,4 @@
-package br.com.estud_io_api.entity;
+package br.com.estud_io_api.entity.auth;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
