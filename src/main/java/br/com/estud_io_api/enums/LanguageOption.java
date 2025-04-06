@@ -26,7 +26,7 @@ public enum LanguageOption {
                 return languageOption;
             }
         }
-        throw new IllegalArgumentException("Invalid language option value: " + value);
+        return LanguageOption.ENGLISH;
     }
 }
 
