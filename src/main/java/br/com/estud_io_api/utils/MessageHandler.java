@@ -24,4 +24,15 @@ public class MessageHandler {
             return "Message not found for key: " + message;
         }
     }
+
+    public String getCustomMessageWithParams(int languageOption, String message, String param) {
+        LanguageOption lang = LanguageOption.fromValue(languageOption);
+        Locale locale = lang == LanguageOption.ENGLISH ?
+                Locale.ENGLISH : new Locale("pt", "BR");
+        try {
+            return messageSource.getMessage(message, new Object[]{param}, locale);
+        } catch (NoSuchMessageException e) {
+            return "Message not found for key: " + message;
+        }
+    }
 }
