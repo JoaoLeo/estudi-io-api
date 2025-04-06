@@ -30,7 +30,7 @@ public class AuthService {
         userValidator.checkAccount(userDTO,languageOption);
         User user = new User(null,userDTO.getName(),userDTO.getEmail(),
                 passwordEncoder.encode(userDTO.getPassword()), LocalDate.now(),
-                userDTO.getGoal());
+                null);
         return userRepo.save(user);
     }
 
