@@ -1,6 +1,7 @@
 package br.com.estud_io_api.utils;
 
 import br.com.estud_io_api.dto.auth.TokenDTO;
+import br.com.estud_io_api.entity.auth.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -39,11 +40,11 @@ public class JwtTokenUtil {
                 .getBody();
     }
 
-    public TokenDTO generateToken(UserDetails userDetails) {
+    public TokenDTO generateToken(User user) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + 3600000);
         String token = Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(user.getName())
                 .setIssuedAt(now)
                 .setExpiration(expiration)
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
