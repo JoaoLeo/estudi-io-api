@@ -34,4 +34,16 @@ public class AuthController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/verify-account")
+    public ResponseEntity<String> verifyAccount(@RequestParam("token") String token,
+                                                @RequestParam("languageOption") Integer languageHeader) {
+        try {
+            service.verifyAccount(token, languageHeader);
+            return ResponseEntity.ok(messageHandler.getCustomMessage(languageHeader,
+                    "subject.email.verified"));
+        } catch (AuthException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

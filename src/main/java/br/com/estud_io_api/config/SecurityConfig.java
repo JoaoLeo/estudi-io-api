@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET,"/public/hello-world").permitAll()
                         .requestMatchers("/auth/create-account").permitAll()
+                        .requestMatchers("/auth/verify-account").permitAll()
                         .requestMatchers("/error").permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
