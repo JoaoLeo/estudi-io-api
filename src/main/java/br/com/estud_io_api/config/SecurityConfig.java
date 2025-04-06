@@ -30,8 +30,8 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/hello-world").permitAll()
-                        .requestMatchers("/auth/create-account").permitAll()
+                        .requestMatchers("api/public/hello-world").permitAll()
+                        .requestMatchers("api/auth/create-account").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
