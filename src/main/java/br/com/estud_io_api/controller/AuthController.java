@@ -29,7 +29,7 @@ public class AuthController {
         try {
             service.createAccount(userDTO,languageHeader);
             return ResponseEntity.ok(messageHandler.getCustomMessage(languageHeader,
-                    "created.successfully"));
+                    "user.created.successfully"));
         } catch (AuthException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

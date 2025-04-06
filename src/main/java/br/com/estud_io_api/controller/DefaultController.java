@@ -22,6 +22,6 @@ public class DefaultController {
     public ResponseEntity<String> getDefaultEndpoint(){
         int language = request.getIntHeader("LanguageOption");
         return ResponseEntity.ok(messageHandler.getCustomMessage(language,
-                "hello-world"));
+                "hello.world"));
     }
 }
