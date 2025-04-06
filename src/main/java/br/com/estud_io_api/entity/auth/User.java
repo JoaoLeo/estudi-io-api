@@ -34,4 +34,10 @@ public class User {
     @Column(name = "goal", length = 500)
     private String goal;
 
+    @Column(name = "token_email_verification")
+    private String emailToken;
+
+    @Column(name = "email_verified")
+    private Boolean emailVerified;
+
 }
