@@ -50,7 +50,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/verify-account")
+    @GetMapping("verify-account")
     @Operation(
             summary = "Verify a user account"
     )
