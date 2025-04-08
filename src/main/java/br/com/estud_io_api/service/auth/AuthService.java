@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Locale;
 
 @Service
 public class AuthService {
@@ -44,8 +45,8 @@ public class AuthService {
     private JwtTokenUtil jwtUtils;
 
     @Transactional
-    public User createAccount(UserDTO userDTO, int languageOption) {
-        userValidator.checkAccount(userDTO, languageOption);
+    public User createAccount(UserDTO userDTO, Locale locale) {
+        userValidator.checkAccount(userDTO, locale);
         String token = tokenUtils.generateEmailVerificationToken();
         User user = new User(null,
                 userDTO.getName(),
@@ -57,35 +58,35 @@ public class AuthService {
                 false);
 
         emailService.sendSimpleEmail(userDTO.getEmail(),
-                messageHandler.getCustomMessage(languageOption,"subject.verify.your.email"),
+                messageHandler.getCustomMessage(locale,"subject.verify.your.email"),
                 messageHandler.getCustomMessageWithParams(
-                        languageOption,
+                        locale,
                         "text.verify.your.email",
-                        tokenUtils.generateLink(token, languageOption)));
+                        tokenUtils.generateLink(token, locale)));
 
         return userRepo.save(user);
     }
 
     @Transactional
-    public void verifyAccount(String token, int languageOption) {
+    public void verifyAccount(String token, Locale locale) {
         User user = userRepo.findByEmailToken(token);
         if(user == null)
-            throw new AuthException(messageHandler.getCustomMessage(languageOption,
+            throw new AuthException(messageHandler.getCustomMessage(locale,
                 "user.not.found"));
         user.setEmailVerified(true);
         user.setEmailToken(null);
         userRepo.save(user);
         emailService.sendHtmlEmail(user.getEmail(),
-                messageHandler.getCustomMessage(languageOption,"subject.email.verified"),
-                messageHandler.getCustomMessage(languageOption,"text.email.verified.html"));
+                messageHandler.getCustomMessage(locale,"subject.email.verified"),
+                messageHandler.getCustomMessage(locale,"text.email.verified.html"));
     }
 
-    public TokenDTO login(LoginDTO loginDTO, int languageOption) {
-        userValidator.checkValidLogin(loginDTO, languageOption);
+    public TokenDTO login(LoginDTO loginDTO, Locale locale) {
+        userValidator.checkValidLogin(loginDTO, locale);
 
         User user = userRepo.findByEmail(loginDTO.getEmail());
         if(passwordEncoder.matches(loginDTO.getPassword(), user.getPassword()))
-            throw new LoginException(messageHandler.getCustomMessage(languageOption,
+            throw new LoginException(messageHandler.getCustomMessage(locale,
                     "error.invalid.password"));
 
         TokenDTO token = jwtUtils.generateToken(user);

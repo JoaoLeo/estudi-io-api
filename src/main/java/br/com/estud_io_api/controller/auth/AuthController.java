@@ -6,6 +6,7 @@ import br.com.estud_io_api.dto.auth.UserDTO;
 import br.com.estud_io_api.exception.AuthException;
 import br.com.estud_io_api.exception.LoginException;
 import br.com.estud_io_api.service.auth.AuthService;
+import br.com.estud_io_api.utils.LocaleUtils;
 import br.com.estud_io_api.utils.MessageHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,15 +18,14 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Locale;
+
 @RestController
 @RequestMapping("auth")
 public class AuthController {
 
     @Autowired
     private AuthService service;
-
-    @Autowired
-    private HttpServletRequest request;
 
     @Autowired
     private MessageHandler messageHandler;
@@ -38,11 +38,12 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "User successfully created"),
             @ApiResponse(responseCode = "400", description = "Invalid input data")
     })
-    public ResponseEntity<String> createAccount(@RequestBody UserDTO userDTO) {
-        int languageHeader = request.getIntHeader("LanguageOption");
+    public ResponseEntity<String> createAccount(@RequestBody UserDTO userDTO,
+                                                @RequestHeader(name = "Accept-Language", required = false)
+                                                Locale locale) {
         try {
-            service.createAccount(userDTO,languageHeader);
-            return ResponseEntity.ok(messageHandler.getCustomMessage(languageHeader,
+            service.createAccount(userDTO, LocaleUtils.returnLocalFromHeader(locale));
+            return ResponseEntity.ok(messageHandler.getCustomMessage(locale,
                     "user.created.successfully"));
         } catch (AuthException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -58,10 +59,11 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Invalid input data")
     })
     public ResponseEntity<String> verifyAccount(@RequestParam("token") String token,
-                                                @RequestParam("languageOption") Integer languageHeader) {
+                                                @RequestParam("languageOption") String languageOption) {
         try {
-            service.verifyAccount(token, languageHeader);
-            return ResponseEntity.ok(messageHandler.getCustomMessage(languageHeader,
+            Locale locale = LocaleUtils.getLocaleByLanguageCode(languageOption);
+            service.verifyAccount(token, locale);
+            return ResponseEntity.ok(messageHandler.getCustomMessage(locale,
                     "subject.email.verified"));
         } catch (AuthException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -77,10 +79,11 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Invalid input data (e.g., malformed JSON)"),
             @ApiResponse(responseCode = "401", description = "Authentication failed (e.g., incorrect password, email not verified)")
     })
-    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
-        int languageHeader = request.getIntHeader("LanguageOption");
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO,
+                                   @RequestHeader(name = "Accept-Language", required = false)
+                                   Locale locale) {
         try {
-            TokenDTO token = service.login(loginDTO, languageHeader);
+            TokenDTO token = service.login(loginDTO, LocaleUtils.returnLocalFromHeader(locale));
             return ResponseEntity.ok(token);
         } catch (LoginException e){
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).body(e.getMessage());

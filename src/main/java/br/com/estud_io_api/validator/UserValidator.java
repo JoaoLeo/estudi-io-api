@@ -10,6 +10,8 @@ import br.com.estud_io_api.utils.MessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
+
 @Component
 public class UserValidator {
 
@@ -23,25 +25,25 @@ public class UserValidator {
         return userRepo.existsByEmail(email);
     }
 
-    public void checkAccount(UserDTO userDTO, int languageOption){
+    public void checkAccount(UserDTO userDTO, Locale locale){
         if(emailInUse(userDTO.getEmail()))
-            throw new AuthException(messageHandler.getCustomMessage(languageOption,
+            throw new AuthException(messageHandler.getCustomMessage(locale,
                     "user.already.exists"));
 
     }
 
-    public void checkValidLogin(LoginDTO loginDTO, int languageOption) {
+    public void checkValidLogin(LoginDTO loginDTO, Locale locale) {
         if(loginDTO == null || loginDTO.getEmail() == null || loginDTO.getPassword() == null)
-            throw new AuthException(messageHandler.getCustomMessage(languageOption,
+            throw new AuthException(messageHandler.getCustomMessage(locale,
                     "error.invalid.data"));
 
         User user = userRepo.findByEmail(loginDTO.getEmail());
         if(user == null)
-            throw new AuthException(messageHandler.getCustomMessage(languageOption,
+            throw new AuthException(messageHandler.getCustomMessage(locale,
                     "email.user.not.found"));
 
         if(user.getEmailVerified() == null || !user.getEmailVerified())
-            throw new LoginException(messageHandler.getCustomMessage(languageOption,
+            throw new LoginException(messageHandler.getCustomMessage(locale,
                     "error.email.not.verified"));
 
     }

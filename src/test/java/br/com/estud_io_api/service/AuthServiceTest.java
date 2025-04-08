@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Locale;
+
 @SpringBootTest
 public class AuthServiceTest {
 
@@ -17,8 +19,8 @@ public class AuthServiceTest {
     @DisplayName("TEST - Create Account")
     @Test()
     void createAccountTest(){
-        UserDTO dto = new UserDTO("Test","test@gmail.com","123", null);
-        User user = service.createAccount(dto, 2);
+        UserDTO dto = new UserDTO("Test","test@gmail.com","123");
+        User user = service.createAccount(dto, Locale.ENGLISH);
         assert user != null;
     }
 }
