@@ -1,6 +1,6 @@
 package br.com.estud_io_api.service;
 
-import br.com.estud_io_api.dto.auth.UserDTO;
+import br.com.estud_io_api.dto.user.UserDTO;
 import br.com.estud_io_api.entity.auth.User;
 import br.com.estud_io_api.service.auth.AuthService;
 import org.junit.jupiter.api.DisplayName;

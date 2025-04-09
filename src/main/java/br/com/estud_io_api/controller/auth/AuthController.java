@@ -2,7 +2,7 @@ package br.com.estud_io_api.controller.auth;
 
 import br.com.estud_io_api.dto.auth.LoginDTO;
 import br.com.estud_io_api.dto.auth.TokenDTO;
-import br.com.estud_io_api.dto.auth.UserDTO;
+import br.com.estud_io_api.dto.user.UserDTO;
 import br.com.estud_io_api.exception.AuthException;
 import br.com.estud_io_api.exception.LoginException;
 import br.com.estud_io_api.service.auth.AuthService;
@@ -11,7 +11,6 @@ import br.com.estud_io_api.utils.MessageHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatusCode;

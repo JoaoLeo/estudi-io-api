@@ -1,7 +1,7 @@
 package br.com.estud_io_api.validator;
 
 import br.com.estud_io_api.dto.auth.LoginDTO;
-import br.com.estud_io_api.dto.auth.UserDTO;
+import br.com.estud_io_api.dto.user.UserDTO;
 import br.com.estud_io_api.entity.auth.User;
 import br.com.estud_io_api.exception.AuthException;
 import br.com.estud_io_api.exception.LoginException;
