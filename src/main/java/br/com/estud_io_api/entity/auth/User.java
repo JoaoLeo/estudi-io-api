@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "users", catalog = "estud-io")
+@Table(name = "users", catalog = "estudio_api")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +19,7 @@ public class User {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "user_name", nullable = false, length = 50)
     private String name;
 
     @Column(name = "email", nullable = false, length = 250)

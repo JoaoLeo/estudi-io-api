@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "study_record", catalog = "estud-io")
+@Table(name = "study_record", catalog = "estudio_api")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
