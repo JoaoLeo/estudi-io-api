@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "flashcards", catalog = "estud-io")
+@Table(name = "flashcards", catalog = "estudio_api")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

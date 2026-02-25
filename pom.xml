@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com</groupId>
-	<artifactId>estud-io-api</artifactId>
+	<artifactId>estudio_api-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>estud-io-api</name>
+	<name>estudio_api-api</name>
 	<description>Study Management API</description>
 	<url/>
 	<licenses>
@@ -73,9 +73,9 @@
 
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.33</version>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>3.3.3</version>
 		</dependency>
 
 

@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "subjects", catalog = "estud-io")
+@Table(name = "subjects", catalog = "estudio_api")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +22,6 @@ public class Subject {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "subject_name", nullable = false, length = 100)
     private String name;
 }
