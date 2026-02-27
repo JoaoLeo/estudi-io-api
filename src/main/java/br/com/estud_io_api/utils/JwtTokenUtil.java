@@ -25,6 +25,11 @@ public class JwtTokenUtil {
         return claims.getSubject();
     }
 
+    public String extractUsernameWithFullToken(String fullToken) {
+        String token = fullToken != null && fullToken.startsWith("Bearer ") ? fullToken.substring(7): null;
+        return extractUsername(token);
+    }
+
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         final String userNameDetails = userDetails.getUsername();

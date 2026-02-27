@@ -23,11 +23,14 @@ import java.util.Locale;
 @RequestMapping("auth")
 public class AuthController {
 
-    @Autowired
-    private AuthService service;
+    private final AuthService service;
 
-    @Autowired
-    private MessageHandler messageHandler;
+    private final MessageHandler messageHandler;
+
+    public AuthController(AuthService service, MessageHandler messageHandler) {
+        this.service = service;
+        this.messageHandler = messageHandler;
+    }
 
     @PostMapping("create-account")
     @Operation(
@@ -58,9 +61,9 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Invalid input data")
     })
     public ResponseEntity<String> verifyAccount(@RequestParam("token") String token,
-                                                @RequestParam("languageOption") String languageOption) {
+                                                @RequestHeader(name = "Accept-Language", required = false)
+                                                Locale locale) {
         try {
-            Locale locale = LocaleUtils.getLocaleByLanguageCode(languageOption);
             service.verifyAccount(token, locale);
             return ResponseEntity.ok(messageHandler.getCustomMessage(locale,
                     "subject.email.verified"));

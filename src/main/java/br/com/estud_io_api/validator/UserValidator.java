@@ -5,7 +5,7 @@ import br.com.estud_io_api.dto.user.UserDTO;
 import br.com.estud_io_api.entity.auth.User;
 import br.com.estud_io_api.exception.AuthException;
 import br.com.estud_io_api.exception.LoginException;
-import br.com.estud_io_api.repository.auth.UserRepository;
+import br.com.estud_io_api.repository.user.UserRepository;
 import br.com.estud_io_api.utils.MessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

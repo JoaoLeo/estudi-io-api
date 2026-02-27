@@ -1,5 +1,6 @@
-package br.com.estud_io_api.repository.auth;
+package br.com.estud_io_api.repository.user;
 
+import br.com.estud_io_api.dto.user.UserDetailsDTO;
 import br.com.estud_io_api.entity.auth.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +20,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findByEmailToken(String emailToken);
 
     Optional<User> findByName(String name);
+
+    @Query("""
+        select new br.com.estud_io_api.dto.user.UserDetailsDTO
+        (u.name, u.email, u.creationDate, u.goal, u.emailVerified)
+        from User u where u.email = :email
+        """)
+    Optional<UserDetailsDTO> getUserDetailsByEmail(@Param("email") String email);
+
 
 }

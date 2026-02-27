@@ -2,11 +2,9 @@ package br.com.estud_io_api.service.auth;
 
 import br.com.estud_io_api.entity.auth.CustomUserDetails;
 import br.com.estud_io_api.entity.auth.User;
-import br.com.estud_io_api.repository.auth.UserRepository;
+import br.com.estud_io_api.repository.user.UserRepository;
 import br.com.estud_io_api.utils.MessageHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
