@@ -16,8 +16,11 @@ import java.util.Locale;
 @RequestMapping("public")
 public class DefaultController {
 
-    @Autowired
-    private MessageHandler messageHandler;
+    private final MessageHandler messageHandler;
+
+    public DefaultController(MessageHandler messageHandler) {
+        this.messageHandler = messageHandler;
+    }
 
     @GetMapping("hello-world")
     public ResponseEntity<String> getDefaultEndpoint(@RequestHeader(name = "Accept-Language", required = false)

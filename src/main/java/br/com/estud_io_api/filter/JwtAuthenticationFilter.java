@@ -1,6 +1,8 @@
 package br.com.estud_io_api.filter;
 
+import br.com.estud_io_api.service.auth.CustomUserDetailsService;
 import br.com.estud_io_api.utils.JwtTokenUtil;
+import br.com.estud_io_api.utils.LocaleUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,14 +17,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Locale;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
     private final JwtTokenUtil jwtTokenUtil;
 
-    public JwtAuthenticationFilter(@Lazy UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
+    public JwtAuthenticationFilter(@Lazy CustomUserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
         this.userDetailsService = userDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
     }
@@ -32,14 +35,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
+        Locale locale = LocaleUtils.getLocaleByLanguageCode(request.getHeader("Accept-Language"));
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             String username = jwtTokenUtil.extractUsername(token);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
+                UserDetails userDetails = userDetailsService.loadUserByEmail(username, locale);
                 if (jwtTokenUtil.validateToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(

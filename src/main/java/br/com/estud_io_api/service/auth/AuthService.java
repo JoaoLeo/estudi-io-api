@@ -23,26 +23,29 @@ import java.util.Locale;
 @Service
 public class AuthService {
 
-    @Autowired
-    private UserRepository userRepo;
+    private final UserRepository userRepo;
 
-    @Autowired
-    private UserValidator userValidator;
-    
-    @Autowired
-    private MessageHandler messageHandler;
+    private final UserValidator userValidator;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final MessageHandler messageHandler;
 
-    @Autowired
-    private EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private TokenEmailUtils tokenUtils;
+    private final EmailService emailService;
 
-    @Autowired
-    private JwtTokenUtil jwtUtils;
+    private final TokenEmailUtils tokenUtils;
+
+    private final JwtTokenUtil jwtUtils;
+
+    public AuthService(UserRepository userRepo, UserValidator userValidator, MessageHandler messageHandler, PasswordEncoder passwordEncoder, EmailService emailService, TokenEmailUtils tokenUtils, JwtTokenUtil jwtUtils) {
+        this.userRepo = userRepo;
+        this.userValidator = userValidator;
+        this.messageHandler = messageHandler;
+        this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+        this.tokenUtils = tokenUtils;
+        this.jwtUtils = jwtUtils;
+    }
 
     @Transactional
     public User createAccount(UserDTO userDTO, Locale locale) {
@@ -85,7 +88,7 @@ public class AuthService {
         userValidator.checkValidLogin(loginDTO, locale);
 
         User user = userRepo.findByEmail(loginDTO.getEmail());
-        if(passwordEncoder.matches(loginDTO.getPassword(), user.getPassword()))
+        if(!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword()))
             throw new LoginException(messageHandler.getCustomMessage(locale,
                     "error.invalid.password"));
 

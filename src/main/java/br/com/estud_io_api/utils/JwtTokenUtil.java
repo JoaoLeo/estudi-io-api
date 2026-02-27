@@ -6,6 +6,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.antlr.v4.runtime.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -20,12 +21,14 @@ public class JwtTokenUtil {
     private String secret;
 
     public String extractUsername(String token) {
-        return getClaims(token).getSubject();
+        Claims claims = getClaims(token);
+        return claims.getSubject();
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        final String userNameDetails = userDetails.getUsername();
+        return username.equals(userNameDetails) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
@@ -42,9 +45,9 @@ public class JwtTokenUtil {
 
     public TokenDTO generateToken(User user) {
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + 3600000);
+        Date expiration = new Date(now.getTime() + 10800000);
         String token = Jwts.builder()
-                .setSubject(user.getName())
+                .setSubject(user.getEmail())
                 .setIssuedAt(now)
                 .setExpiration(expiration)
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
