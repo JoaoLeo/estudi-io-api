@@ -11,7 +11,6 @@ import br.com.estud_io_api.utils.MessageHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,6 @@ import java.util.Locale;
 public class AuthController {
 
     private final AuthService service;
-
     private final MessageHandler messageHandler;
 
     public AuthController(AuthService service, MessageHandler messageHandler) {
