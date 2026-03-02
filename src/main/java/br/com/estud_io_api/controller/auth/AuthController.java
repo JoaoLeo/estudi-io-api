@@ -59,9 +59,9 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Invalid input data")
     })
     public ResponseEntity<String> verifyAccount(@RequestParam("token") String token,
-                                                @RequestHeader(name = "Accept-Language", required = false)
-                                                Locale locale) {
+                                                @RequestParam("languageOption") String languageOption) {
         try {
+            Locale locale = LocaleUtils.getLocaleByLanguageCode(languageOption);
             service.verifyAccount(token, locale);
             return ResponseEntity.ok(messageHandler.getCustomMessage(locale,
                     "subject.email.verified"));
@@ -85,6 +85,23 @@ public class AuthController {
         try {
             TokenDTO token = service.login(loginDTO, LocaleUtils.returnLocalFromHeader(locale));
             return ResponseEntity.ok(token);
+        } catch (LoginException e){
+            return ResponseEntity.status(HttpStatusCode.valueOf(401)).body(e.getMessage());
+        } catch (AuthException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("resend-verification-email")
+    @Operation(
+            summary = "Resend verification Email"
+    )
+    public ResponseEntity<?> sendEmailVerification(@RequestBody String email,
+                                   @RequestHeader(name = "Accept-Language", required = false)
+                                   Locale locale) {
+        try {
+            service.sendEmailVerification(email, null, LocaleUtils.returnLocalFromHeader(locale));
+            return ResponseEntity.ok(messageHandler.getCustomMessage(locale, "email.user.verification.resent"));
         } catch (LoginException e){
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).body(e.getMessage());
         } catch (AuthException e){

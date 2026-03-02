@@ -39,6 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/create-account").permitAll()
                         .requestMatchers("/auth/verify-account").permitAll()
                         .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/resend-verification-email").permitAll()
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",

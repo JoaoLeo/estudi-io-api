@@ -50,6 +50,7 @@ public class AuthService {
     public User createAccount(UserDTO userDTO, Locale locale) {
         userValidator.checkAccount(userDTO, locale);
         String token = tokenUtils.generateEmailVerificationToken();
+
         User user = new User(null,
                 userDTO.getName(),
                 userDTO.getEmail(),
@@ -59,12 +60,7 @@ public class AuthService {
                 token,
                 false);
 
-        emailService.sendSimpleEmail(userDTO.getEmail(),
-                messageHandler.getCustomMessage(locale,"subject.verify.your.email"),
-                messageHandler.getCustomMessageWithParams(
-                        locale,
-                        "text.verify.your.email",
-                        tokenUtils.generateLink(token, locale)));
+        sendEmailVerification(userDTO.getEmail(), token, locale);
 
         return userRepo.save(user);
     }
@@ -93,5 +89,21 @@ public class AuthService {
 
         TokenDTO token = jwtUtils.generateToken(user);
         return token;
+    }
+
+    public void sendEmailVerification(String email, String token, Locale locale) {
+        if (token == null)
+            token = tokenUtils.generateEmailVerificationToken();
+
+        User user = userRepo.findByEmail(email);
+
+        emailService.sendSimpleEmail(email,
+                messageHandler.getCustomMessage(locale,"subject.verify.your.email"),
+                messageHandler.getCustomMessageWithParams(
+                        locale,
+                        "text.verify.your.email",
+                        tokenUtils.generateLink(token, locale)));
+        user.setEmailToken(token);
+        userRepo.save(user);
     }
 }

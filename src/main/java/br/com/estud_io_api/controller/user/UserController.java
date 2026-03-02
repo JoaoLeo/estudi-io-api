@@ -4,6 +4,7 @@ package br.com.estud_io_api.controller.user;
 import br.com.estud_io_api.dto.auth.PasswordChangeDTO;
 import br.com.estud_io_api.dto.user.UserDTO;
 import br.com.estud_io_api.dto.user.UserDetailsDTO;
+import br.com.estud_io_api.dto.user.UserUpdateDTO;
 import br.com.estud_io_api.exception.AuthException;
 import br.com.estud_io_api.exception.NotFoundException;
 import br.com.estud_io_api.service.user.UserService;
@@ -41,7 +42,7 @@ public class UserController {
                                                    Locale locale) {
         try {
             String email = jwtTokenUtil.extractUsernameWithFullToken(token);
-            UserDetailsDTO user = service.getUserDetailsByEmail(email, locale);
+            UserDetailsDTO user = service.getUserDetailsByEmail(email, LocaleUtils.returnLocalFromHeader(locale));
             return ResponseEntity.ok(user);
         } catch (NotFoundException e){
             return ResponseEntity.notFound().build();
@@ -57,8 +58,9 @@ public class UserController {
                                                 @RequestHeader(name = "Accept-Language", required = false)
                                                 Locale locale) {
         try {
+            locale = LocaleUtils.returnLocalFromHeader(locale);
             String email = jwtTokenUtil.extractUsernameWithFullToken(token);
-            service.changePassword(dto,email,LocaleUtils.returnLocalFromHeader(locale));
+            service.changePassword(dto,email, locale);
             return ResponseEntity.ok(messageHandler.getCustomMessage(locale,
                     "user.password.updated"));
         } catch (AuthException e){
@@ -66,5 +68,19 @@ public class UserController {
         }
     }
 
+    @PutMapping("update")
+    @Operation(
+            summary = "Update a user account"
+    )
+    public ResponseEntity<String> updateUser(@RequestBody UserUpdateDTO dto,
+                                                @RequestHeader(name = "Authorization") String token,
+                                                @RequestHeader(name = "Accept-Language", required = false)
+                                                Locale locale) {
+        locale = LocaleUtils.returnLocalFromHeader(locale);
+        String email = jwtTokenUtil.extractUsernameWithFullToken(token);
+        service.updateUser(dto,email,locale);
+        return ResponseEntity.ok(messageHandler.getCustomMessage(locale,
+                "data.updated.successfully"));
+    }
 
 }
