@@ -5,11 +5,11 @@ import java.util.Locale;
 public class LocaleUtils {
 
     public static Locale returnLocalFromHeader(Locale locale) {
-        return (locale != null) ? locale : Locale.ENGLISH;
+        return (locale != null) ? locale : Locale.forLanguageTag("pt-BR");
     }
 
     public static Locale getLocaleByLanguageCode(String languageCode) {
-        return (languageCode != null) ? Locale.forLanguageTag(languageCode) : Locale.ENGLISH;
+        return (languageCode != null) ? Locale.forLanguageTag(languageCode) : Locale.forLanguageTag("pt-BR");
     }
 
 }
